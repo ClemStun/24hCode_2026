@@ -118,6 +118,8 @@ def import_tiles(request):
                 type=tile['type'],
                 zone=tile['zone']
             )
+
+        return JsonResponse({'status': 'success'})
     else:
         return HttpResponseNotAllowed(['POST'])
     

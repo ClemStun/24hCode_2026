@@ -111,6 +111,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: 100%;
     z-index: 1;
+    pointer-events: none;
 }
 
 #game-container #game-hud #game-hud-bars {
@@ -125,6 +126,8 @@ h1, h2, h3, h4, h5, h6 {
 #game-container #game-hud #game-hud-bars .resource-bar {
     display: flex;
     align-items: center;
+    pointer-events: all;
+    width: min-content;
 }
 
 #game-container #game-hud #game-hud-bars .bar-icon {
@@ -159,7 +162,7 @@ h1, h2, h3, h4, h5, h6 {
 #game-container #game-hud #game-hud-bars .resource-bar .bar-frame {
     display: flex;
     position: relative;
-    padding: 16px 0 16px 32px;
+    padding: 16px 32px 16px 32px;
     margin-left: -10.5px;
     height: 32px;
     width: 64px;
@@ -197,6 +200,7 @@ h1, h2, h3, h4, h5, h6 {
 #game-container #game-hud #game-hud-bars .boat-bar .move-bar {
     display: flex;
     align-items: center;
+    pointer-events: all;
 }
 
 #game-container #game-hud #game-hud-bars .boat-bar .move-bar .movement-bar-frame {
@@ -241,12 +245,37 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 8px;
 }
 
+#game-container #game-hud #game-hud-bars .boat-bar .move-bar .move-progress-background {
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+
+    width: 94%;
+    background-color: black;
+}
+
+#game-container #game-hud #game-hud-bars .boat-bar .move-bar .move-progress-background::after {
+    content: '';
+    position: absolute;
+    right: -14px;
+    top: 2px;
+
+    width: 24px;
+    height: 100%;
+    background-color: black;
+    transform: rotate(45deg);
+    border-radius: 8px;
+}
+
 #game-container #game-hud #game-hud-bars .boat-bar .move-bar .move-progress-text {
     position: absolute;
-    top: 115%;
-    left: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: white;
-    -webkit-text-stroke: 0.5px black;
+    font-size: 20px;
 }
 
 #game-container #game-hud #game-hud-bars .boat-bar .level-bar {
@@ -254,6 +283,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: 2.5px;
     position: relative;
     width: min-content;
+    pointer-events: all;
 }
 
 #game-container #game-hud #game-hud-bars .boat-bar .level-bar .level-img {
@@ -293,6 +323,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     width: max-content;
     height: max-content;
+    gap: 1px;
 }
 
 #game-container #game-map #map-container .map-row {
@@ -314,6 +345,10 @@ h1, h2, h3, h4, h5, h6 {
     border-style: solid;
     position: relative;
     background-color: black;
+}
+
+#game-container #game-map #map-container .map-cell.selected {
+    border-color: red;
 }
 
 #game-container #game-map #map-container .map-cell[data-type="sea"] {
@@ -353,6 +388,92 @@ h1, h2, h3, h4, h5, h6 {
 
 #game-container #game-map #map-container .map-cell.boat.boat-right::after {
     --boat-img: url(../assets/images/boat/boat-right.svg);
+}
+
+/* #endregion */
+
+/* #region Menu */
+
+#game-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.25);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-menu #game-menu-content {
+    position: relative;
+    padding: 32px 0;
+    width: 508px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    border: 2px solid #8F697D;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.83);
+}
+
+#game-menu #game-menu-exit {
+    position: absolute;
+    right: -22px;
+    top: -22px;
+    width: 44px;
+    height: 44px;
+    background-color: #DA7676;
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-menu #game-menu-exit > img {
+    width: 16px;
+}
+
+#game-menu #game-menu-content #game-menu-title {
+    font-size: 24px;
+    color: #798085;
+}
+
+#game-menu #game-menu-content #game-menu-choices {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+#game-menu #game-menu-content #game-menu-choices .game-menu-choice {
+    font-size: 32px;
+    position: relative;
+}
+
+#game-menu #game-menu-content #game-menu-choices .game-menu-choice.current-choice:before {
+    position: absolute;
+    top: 50%;
+    left: -16px;
+    transform: translate(-100%, -50%);
+
+    content: '';
+    background-image: url('../assets/icons/vector.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 51px;
+    height: 46px;
+
+    /* Blink animation */
+    animation: blink-vector 1s steps(2, start) infinite;
 }
 
 /* #endregion */

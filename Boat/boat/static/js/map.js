@@ -22,6 +22,12 @@ class Map extends Game {
     _currentPosition = { x: 0, y: 0, direction: undefined };
     _currentView = { startX: 0, startY: 0, endX: 0, endY: 0 };
 
+    _inMenu = false;
+    _menu = document.getElementById('game-menu');
+    _handleMoveUpMenuCallback = this._handleMoveUpMenu.bind(this);
+    _handleMoveDownMenuCallback = this._handleMoveDownMenu.bind(this);
+    _handleActionMenuCallback = this._handleActionMenu.bind(this);
+
     init(data) {
         super.init();
 
@@ -30,6 +36,17 @@ class Map extends Game {
             this._tiles[tile.y] ??= [];
             this._tiles[tile.y][tile.x] = tile;
         }
+
+        this._mapContainer.addEventListener('click', (event) => {
+            if(event.target.classList.contains('map-cell')) {
+                document.querySelectorAll('.map-cell.selected').forEach(cell => cell.classList.remove('selected'));
+                event.target.classList.add('selected');
+            }
+        });
+
+        document.addEventListener('game.menu', (event) => {
+            this.toggleMenu();
+        });
 
         this.renderMap();
         this.renderBoat();
@@ -129,8 +146,91 @@ class Map extends Game {
             this.renderMap();
         }
     }
+
+    toggleMenu(forceState) {
+        this._inMenu = forceState ?? !this._inMenu;
+
+        if (this._inMenu) {
+            this._menu.style.cssText = '';
+            document.addEventListener('game.move_down', this._handleMoveDownMenuCallback);
+            document.addEventListener('game.move_up', this._handleMoveUpMenuCallback);
+            document.addEventListener('game.action', this._handleActionMenuCallback);
+        } else {
+            this._menu.style.cssText = 'display: none;';
+            document.removeEventListener('game.move_down', this._handleMoveDownMenuCallback);
+            document.removeEventListener('game.move_up', this._handleMoveUpMenuCallback);
+            document.removeEventListener('game.action', this._handleActionMenuCallback);
+        }
+    }
+
+    _handleMoveDownMenu() {
+        const current = this._menu.querySelector('.current-choice');
+        if (current) {
+            const next = current.nextElementSibling || this._menu.querySelector('.choice:first-child');
+            if (next) {
+                current.classList.remove('current-choice');
+                next.classList.add('current-choice');
+            }
+        }
+    }
+
+    _handleMoveUpMenu() {
+        const current = this._menu.querySelector('.current-choice');
+        if (current) {
+            const previous = current.previousElementSibling || this._menu.querySelector('.choice:last-child');
+            if (previous) {
+                current.classList.remove('current-choice');
+                previous.classList.add('current-choice');
+            }
+        }
+    }
+
+    _handleActionMenu() {
+        const current = this._menu.querySelector('.current-choice');
+        if (current) {
+            const callbackName = current.getAttribute('data-callback');
+            if (typeof this[callbackName] === 'function') {
+                this[callbackName]();
+            }
+        }
+    }
+
+    async end() {
+        await this.onShutdown();
+        window.location.href = '/';
+    }
+
+    openOptions() {
+
+    }
+
+    syncTiles() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json,.txt'; // Adapter selon le type de fichier attendu
+        input.style.display = 'none';
+        document.body.appendChild(input);
+
+        input.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const data = new FormData();
+                data.append('file', file);
+                await this._api.post('/api/tiles/import/', {
+                    data: data
+                });
+            }
+
+            document.body.removeChild(input);
+        });
+
+        input.click();
+    }
 }
 
 const map = new Map();
+window.syncTiles = () => map.syncTiles();
+window.closeMenu = () => map.toggleMenu(false);
+
 export { map };
 export default map;

@@ -34,15 +34,21 @@ class Api {
         Object.entries(options.data ?? {}).forEach(([key, value]) => url.searchParams.append(key, value));
         delete options.data;
 
+        const headers = {
+            'X-CSRFToken': csrfToken
+        };
+        if (options.headers) {
+            delete options.headers['X-CSRFToken'];
+            Object.assign(headers, options.headers);
+            delete options.headers;
+        }
+
         this._requests.get[endpoint]?.abort();
         this._requests.get[endpoint] = new AbortController();
         const request = fetch(url, {
             ...options,
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
-            },
+            headers: headers,
             signal: this._requests.get[endpoint].signal,
         });
 
@@ -62,6 +68,21 @@ class Api {
 
         const data = options.data ?? {};
         delete options.data;
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+        };
+
+        if (data.headers) {
+            delete data.headers['Content-Type'];
+            delete data.headers['X-CSRFToken'];
+            Object.assign(headers, data.headers);
+            delete data.headers;
+        }
+
+        if (data instanceof FormData) {
+            delete headers['Content-Type'];
+        }
 
         this._requests.post[endpoint]?.abort();
         this._requests.post[endpoint] = new AbortController();
@@ -69,11 +90,8 @@ class Api {
         const request = fetch(url, {
             ...options,
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
-            },
-            body: JSON.stringify(data),
+            headers: headers,
+            body: data instanceof FormData ? data : JSON.stringify(data),
             signal: this._requests.post[endpoint].signal,
         });
 
@@ -97,6 +115,21 @@ class Api {
 
         const data = options.data ?? {};
         delete options.data;
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+        };
+
+        if (data.headers) {
+            delete data.headers['Content-Type'];
+            delete data.headers['X-CSRFToken'];
+            Object.assign(headers, data.headers);
+            delete data.headers;
+        }
+
+        if (data instanceof FormData) {
+            delete headers['Content-Type'];
+        }
 
         this._requests.put[endpoint]?.abort();
         this._requests.put[endpoint] = new AbortController();
@@ -104,11 +137,8 @@ class Api {
         const request = fetch(url, {
             ...options,
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
-            },
-            body: JSON.stringify(data),
+            headers: headers,
+            body: data instanceof FormData ? data : JSON.stringify(data),
             signal: this._requests.put[endpoint].signal,
         });
 

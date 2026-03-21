@@ -10,7 +10,8 @@ class KeybindsManager {
         'move_down': ['ArrowDown', 'KeyS'],
         'move_left': ['ArrowLeft', 'KeyA', 'KeyQ'],
         'move_right': ['ArrowRight', 'KeyD'],
-        'action': ['Space', 'Enter']
+        'action': ['Space', 'Enter'],
+        'menu': ['Escape']
     };
 
     static _langage = {
