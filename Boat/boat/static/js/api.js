@@ -1,0 +1,160 @@
+const csrfToken = getCookie('csrftoken');
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+        for (const cookie of cookies) {
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+class Api {
+    _requests = { get: {}, post: {}, put: {}, delete: {} };
+    _pendingRequests = {};
+    get pendingRequests() {
+        return { ...this._pendingRequests };
+    }
+
+    async get(endpoint, options = {}) {
+        if (this._shudown) {
+            return;
+        }
+
+        const url = new URL(endpoint, window.location.origin);
+        Object.entries(options.data ?? {}).forEach(([key, value]) => url.searchParams.append(key, value));
+        delete options.data;
+
+        this._requests.get[endpoint]?.abort();
+        this._requests.get[endpoint] = new AbortController();
+        const request = fetch(url, {
+            ...options,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            signal: this._requests.get[endpoint].signal,
+        });
+
+        this._pendingRequests[endpoint] = request;
+        const response = await request;
+        if (!response.ok) {
+            throw new Error(`GET ${endpoint} failed with status ${response.status}`);
+        }
+
+        return await response.json();
+    }
+
+    async post(endpoint, options = {}) {
+        if (this._shudown) {
+            return;
+        }
+
+        const data = options.data ?? {};
+        delete options.data;
+
+        this._requests.post[endpoint]?.abort();
+        this._requests.post[endpoint] = new AbortController();
+        const request = fetch(endpoint, {
+            ...options,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify(data),
+            signal: this._requests.post[endpoint].signal,
+        });
+
+        this._pendingRequests[endpoint] = request;
+        const response = await request;
+        if (!response.ok) {
+            throw new Error(`POST ${endpoint} failed with status ${response.status}`);
+        }
+
+        try {
+            return await response.json();
+        } catch {
+            return undefined;
+        }
+    }
+
+    async put(endpoint, options = {}) {
+        if (this._shudown) {
+            return;
+        }
+
+        const data = options.data ?? {};
+        delete options.data;
+
+        this._requests.put[endpoint]?.abort();
+        this._requests.put[endpoint] = new AbortController();
+        const request = fetch(endpoint, {
+            ...options,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify(data),
+            signal: this._requests.put[endpoint].signal,
+        });
+
+        this._pendingRequests[endpoint] = request;
+        const response = await request;
+        if (!response.ok) {
+            throw new Error(`PUT ${endpoint} failed with status ${response.status}`);
+        }
+
+        try {
+            return await response.json();
+        } catch {
+            return undefined;
+        }
+    }
+
+    async delete(endpoint, options = {}) {
+        if (this._shudown) {
+            return;
+        }
+
+        this._requests.delete[endpoint]?.abort();
+        this._requests.delete[endpoint] = new AbortController();
+        const request = fetch(endpoint, {
+            ...options,
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            signal: this._requests.delete[endpoint].signal
+        });
+
+        this._pendingRequests[endpoint] = request;
+        const response = await request;
+        if (!response.ok) {
+            throw new Error(`DELETE ${endpoint} failed with status ${response.status}`);
+        }
+
+        try {
+            return await response.json();
+        } catch {
+            return undefined;
+        }
+    }
+
+    async onShutdown() {
+        this._shudown = true;
+        await Promise.all(Object.values(this._pendingRequests));
+    }
+}
+
+const api = new Api();
+export { api };
+export default api;

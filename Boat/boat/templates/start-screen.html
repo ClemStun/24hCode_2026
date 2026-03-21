@@ -1,0 +1,25 @@
+{% load static %}
+{% csrf_token %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Lancement</title>
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    </head>
+    <body>
+        <div class="start-game-screen">
+            <img src="{% static 'assets/images/start-game-background.png' %}" alt="Start Game Background" class="start-game-background">
+            <div class="start-game-content">
+                <h1 class="start-game-title">3026</h1>
+                <div class="choices">
+                    <h3 class="choice current-choice" data-callback="start">START GAME</h3>
+                    <h3 class="choice" data-callback="openOptions">OPTIONS</h3>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+<script type="module">
+    import { startScreen } from "{% static 'js/start-screen.js' %}";
+    startScreen.init();
+</script>

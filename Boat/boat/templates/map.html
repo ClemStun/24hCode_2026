@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Carte</title>
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    </head>
+    <body>
+        <div id="game-container">
+            <div id="game-hud">
+                <div id="game-hud-bars">
+                    <div id="boisium-bar"></div>
+                    <div id="feronium-bar"></div>
+                    <div id="charbonium-bar"></div>
+                    <div id="boat-bar"></div>
+                </div>
+            </div>
+            <div id="game-map">
+                <div id="map-container"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<script type="module">
+    import { map } from "{% static 'js/map.js' %}";
+    map.init({{ data|safe }});
+</script>
