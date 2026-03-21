@@ -4,6 +4,7 @@
     <head>
         <title>Carte</title>
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/market.css' %}">
     </head>
     <body>
         <div id="game-container">
@@ -56,9 +57,52 @@
                 <div id="map-container"></div>
             </div>
         </div>
+    <div id="cart-bubble">
+        <img src="{% static 'assets/icons/cart.svg' %}" alt="Panier" />
+    </div>
+    <div id="market-modal"></div>
     </body>
 </html>
 <script type="module">
     import { map } from "{% static 'js/map.js' %}";
+    import { initMarket } from "{% static 'js/market.js' %}";
     map.init({{ data|safe }});
+
+    const cartBubble = document.getElementById('cart-bubble');
+    const marketModal = document.getElementById('market-modal');
+
+    cartBubble.onclick = async () => {
+        try {
+            const resp = await fetch('/market/');
+            const html = await resp.text();
+            marketModal.innerHTML = html;
+            marketModal.style.display = 'block';
+
+            initMarket();
+
+        } catch (e) {
+            alert('Erreur lors du chargement du marché');
+        }
+    };
 </script>
+
+<style>
+    #market-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+
+        align-items: center;
+        justify-content: center;
+
+        background: rgba(0,0,0,0.6);
+    }
+
+    #market-modal > * {
+        width: 400px;
+        max-height: 80vh;
+        overflow-y: auto;
+        background: #F6F0D8;
+    }
+</style>

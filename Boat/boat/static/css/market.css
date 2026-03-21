@@ -1,0 +1,305 @@
+.market-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 24px 24px 16px 24px;
+}
+
+h2 {
+  font-size: 2em;
+  margin: 0;
+  color: #2D1B1B;
+  letter-spacing: 1px;
+}
+
+.close-market-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.close-market-btn img {
+  width: 44px;
+  height: 44px;
+  display: block;
+  pointer-events: none;
+}
+
+
+.close-market-btn:hover {
+  width: 44px;
+  height: 44px;
+}
+
+#sellBtn {
+  position: sticky;
+  bottom: 24px;
+  left: 0;
+  width: calc(100% - 104px);
+  margin: 0 24px 0 80px;
+  background: #DDD8D8;
+  color: #2D1B1B;
+  border: 2px solid #8F6978;
+  border-radius: 10px;
+  font-size: 1.2em;
+  padding: 16px 0;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px #DAC276;
+  transition: background 0.2s;
+}
+
+#sellBtn:hover {
+  background: #CFCACA;
+}
+
+#offers {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0 24px 24px 80px;
+}
+
+.card {
+  background: #E5D2DA;
+  border: 2px solid #8F6978;
+  border-radius: 16px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: flex-start;
+  min-width: 350px;
+  gap: 18px;
+  box-shadow: none;
+}
+
+.offer-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.offer-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.offer-title {
+  font-size: 1.5em;
+  color: #2D1B1B;
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+.offer-price {
+  background: #DAC276;
+  border: 2px solid #F6F0D8;
+  border-radius: 8px;
+  color: #2D1B1B;
+  font-size: 1.1em;
+  padding: 8px 16px;
+  margin-right: 8px;
+  display: inline-block;
+  min-width: 128px;
+}
+
+.qty-input {
+  border-radius: 6px;
+  border: 1px solid #8F6978;
+  background: #fff;
+  color: #2D1B1B;
+  font-size: 1em;
+  padding: 8px 16px;
+  margin-bottom: 0.5em;
+}
+
+.card .buy {
+  background: #91DA76;
+  color: #2D1B1B;
+  border: 2px solid #F6F0D8;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-left: 0;
+  transition: background 0.2s;
+  min-width: 128px;
+}
+
+.card .buy:hover {
+  background: #7FCB65;
+}
+
+.card .delete {
+  background: #F7B6B6;
+  color: #2D1B1B;
+  border: 2px solid #F44336;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-left: 8px;
+  transition: background 0.2s;
+}
+
+.card .delete:hover {
+  background: #E89A9A;
+}
+
+#sellModal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.18);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#sellModal .modal-content {
+  background: #E5D2DA;
+  border: 2px solid #8F6978;
+  border-radius: 16px;
+  min-width: 320px;
+  padding: 32px 24px 24px 24px;
+  position: relative;
+  color: #2D1B1B;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#closeModal {
+  position: absolute;
+  top: 12px; right: 12px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+#closeModal:hover {
+  background: #E89A9A;
+}
+
+#sellModal label {
+  font-size: 1.1em;
+  color: #2D1B1B;
+}
+
+#resourceSelect, #sellQty, #sellPrice {
+  font-size: 1.1em;
+  border-radius: 6px;
+  border: 2px solid #8F6978;
+  background: #fff;
+  color: #2D1B1B;
+  padding: 8px 16px;
+  font-family: 'VT323', 'Courier New', monospace;
+  margin-top: 4px;
+}
+
+#confirmSell {
+  background: #B6E6B6;
+  color: #2D1B1B;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-top: 12px;
+  font-family: 'VT323', 'Courier New', monospace;
+}
+
+#confirmSell:hover {
+  background: #A2D8A2;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #E5D2DA;
+}
+::-webkit-scrollbar-thumb {
+  background: #8F6978;
+  border-radius: 8px;
+}
+
+.offer-bar-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--bar-icon-color, #71593F);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  border: 2px solid #8F6978;
+  box-shadow: 0 2px #DAC276;
+}
+.offer-bar-icon-img {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+#cart-bubble {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 56px;
+  height: 56px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  border: 2px solid #DAC276;
+  transition: box-shadow 0.2s;
+}
+#cart-bubble:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+#cart-bubble img {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+#marketModal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.18);
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+#marketModal .modal-content {
+  background: #E5D2DA;
+  border: 2px solid #8F6978;
+  border-radius: 16px;
+  padding: 32px 24px 24px 24px;
+  color: #2D1B1B;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+#marketModal .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}

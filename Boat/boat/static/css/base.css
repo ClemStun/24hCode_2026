@@ -127,21 +127,21 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 
-#game-container #game-hud #game-hud-bars .bar-icon {
+.bar-icon {
     --bar-icon-size: 72px;
     --bar-icon-color: black;
     position: relative;
     z-index: 1;
 }
 
-#game-container #game-hud #game-hud-bars .bar-icon .bar-icon-img {
+.bar-icon .bar-icon-img {
     position: relative;
     z-index: 1;
     width: var(--bar-icon-size);
     height: var(--bar-icon-size);
 }
 
-#game-container #game-hud #game-hud-bars .bar-icon::before {
+.bar-icon::before {
     content: '';
     position: absolute;
     width: calc(var(--bar-icon-size) - 4px);
@@ -179,7 +179,7 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    
+
     color: white;
     font-size: 16px;
     font-weight: 900;
