@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('market/', views.market, name='market'),
     path('start-screen/', views.start_screen, name='start-screen'),
     path('map/', views.map, name='map'),
     path('api/keybinds/', views.keybinds, name='keybinds'),

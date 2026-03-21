@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Marketplace OFFRES</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 2em;
+    background: #121212;
+    color: #fff;
+  }
+  #offers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1em;
+    width: 200px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border: 2px solid #444;
+  }
+  .card h3 {
+    margin: 0 0 0.5em 0;
+    font-size: 1em;
+    color: #fff;
+  }
+  .card p {
+    margin: 0.2em 0;
+    font-size: 0.9em;
+  }
+  .card button {
+    margin-top: 0.5em;
+    width: 100%;
+    padding: 0.5em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .buy {
+    background: #4caf50;
+    color: white;
+  }
+  .delete {
+    background: #f44336;
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<h2>OFFRES Marketplace</h2>
+<button id="sellBtn" style="margin-bottom:2em;">Vendre</button>
+<div id="offers">
+
+</div>
+
+<div id="sellModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;z-index:1000;">
+    <div style="background:#222;padding:2em;border-radius:10px;min-width:300px;position:relative;">
+      <button id="closeModal" style="position:absolute;top:10px;right:10px;">X</button>
+      <h3>Créer une offre</h3>
+      <label>Ressource :
+        <select id="resourceSelect"></select>
+      </label>
+      <br><br>
+      <label>Quantité :
+        <input type="number" id="sellQty" min="1" value="1" style="width:80px;">
+      </label>
+      <br><br>
+      <label>Prix/unité :
+        <input type="number" id="sellPrice" min="1" value="1" style="width:80px;">
+      </label>
+      <br><br>
+      <button id="confirmSell">Valider</button>
+    </div>
+  </div>
+
+<script>
+  // Offres injectées par Django
+  const initialOffers = {{ offers|safe }};
+  const offersContainer = document.getElementById('offers');
+  const API_BASE = 'http://ec2-15-237-116-133.eu-west-3.compute.amazonaws.com:8443/marketplace';
+  const WS_BASE = 'http://localhost:8001/ws';
+
+  const sellBtn = document.getElementById('sellBtn');
+  const sellModal = document.getElementById('sellModal');
+  const closeModal = document.getElementById('closeModal');
+  const resourceSelect = document.getElementById('resourceSelect');
+  const confirmSell = document.getElementById('confirmSell');
+
+  sellBtn.onclick = async () => {
+    // Récupère les ressources disponibles
+    try {
+      const resp = await fetch(`${API_BASE.replace('/marketplace','')}/resources`, {
+        headers: {
+          'codinggame-Id': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb2RpbmdnYW1lIiwic3ViIjoiMDAyNjQyYzItYmJiMS00OTdkLWFiZTItMDU5ZTA2MGJhNzExIiwicm9sZXMiOlsiVVNFUiJdfQ.bTbRXfHkvrBHYexewru3uX7x3j8L-GfMnXzymkxbU2k'
+        }
+      });
+      const resources = await resp.json();
+      resourceSelect.innerHTML = resources.map(r => `<option value="${r.type}">${r.type} (${r.quantity})</option>`).join('');
+      sellModal.style.display = 'flex';
+    } catch (e) {
+      alert('Erreur lors du chargement des ressources');
+    }
+  };
+
+  closeModal.onclick = () => {
+    sellModal.style.display = 'none';
+  };
+
+  confirmSell.onclick = async () => {
+    const resourceType = resourceSelect.value;
+    const quantityIn = parseInt(document.getElementById('sellQty').value, 10);
+    const pricePerResource = parseFloat(document.getElementById('sellPrice').value);
+    if (!resourceType || isNaN(quantityIn) || quantityIn < 1 || isNaN(pricePerResource) || pricePerResource < 1) {
+      alert('Champs invalides');
+      return;
+    }
+    try {
+      const resp = await fetch(`${API_BASE}/offers`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'codinggame-Id': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb2RpbmdnYW1lIiwic3ViIjoiMDAyNjQyYzItYmJiMS00OTdkLWFiZTItMDU5ZTA2MGJhNzExIiwicm9sZXMiOlsiVVNFUiJdfQ.bTbRXfHkvrBHYexewru3uX7x3j8L-GfMnXzymkxbU2k'
+        },
+        body: JSON.stringify({ resourceType, quantityIn, pricePerResource })
+      });
+      if (resp.ok) {
+        alert('Offre créée !');
+        sellModal.style.display = 'none';
+      } else {
+        alert('Erreur création offre');
+      }
+    } catch (e) {
+      alert('Erreur réseau');
+    }
+  };
+
+  let offersById = {};
+
+  function renderOffer(offer) {
+    let card = document.getElementById(`offer-${offer.id}`);
+
+    if (!card) {
+      card = document.createElement('div');
+      card.id = `offer-${offer.id}`;
+      card.className = 'card';
+      offersContainer.prepend(card);
+    }
+
+    card.innerHTML = `
+      <h3>${offer.resourceType}</h3>
+      <p>Quantité: ${offer.quantityIn}</p>
+      <p>Prix/unité: ${offer.pricePerResource}</p>
+      <input type="number" min="0" max="${offer.quantityIn}" value="0" class="qty-input" style="width:60px;margin-bottom:0.5em;">
+      <button class="buy">Acheter</button>
+      <button class="delete">Supprimer</button>
+    `;
+
+    card.querySelector('.buy').onclick = async () => {
+      const qty = parseInt(card.querySelector('.qty-input').value, 10);
+      if (isNaN(qty) || qty < 1 || qty > offer.quantityIn) {
+        alert('Quantité invalide');
+        return;
+      }
+      try {
+        const resp = await fetch(`${API_BASE}/purchases`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'codinggame-Id': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb2RpbmdnYW1lIiwic3ViIjoiMDAyNjQyYzItYmJiMS00OTdkLWFiZTItMDU5ZTA2MGJhNzExIiwicm9sZXMiOlsiVVNFUiJdfQ.bTbRXfHkvrBHYexewru3uX7x3j8L-GfMnXzymkxbU2k'
+          },
+          body: JSON.stringify({ offerId: offer.id, quantity: qty })
+        });
+        if (resp.ok) alert('Achat envoyé !');
+        else alert('Erreur achat');
+      } catch (error) {
+        alert('Erreur réseau lors de l\'achat');
+      }
+    };
+
+    card.querySelector('.delete').onclick = async () => {
+      try {
+        const resp = await fetch(`${API_BASE}/offers/${offer.id}`, { method: 'DELETE' });
+        if (resp.ok) {
+          card.remove();
+          delete offersById[offer.id];
+        } else {
+          alert('Erreur suppression');
+        }
+      } catch (error) {
+        alert('Erreur réseau lors de la suppression');
+      }
+    };
+  }
+
+  // Affiche les offres passées par Django
+  if (Array.isArray(initialOffers)) {
+    initialOffers.forEach(offer => {
+      offersById[offer.id] = offer;
+      renderOffer(offer);
+    });
+  }
+
+  // WebSocket pour les updates temps réel
+  function handleWSMessage(data) {
+    if (data.type === 'OFFRE' || data.type === 'OFFRE_SUPPRIMEE') {
+      const offer = data.message;
+      offersById[offer.id] = offer;
+      renderOffer(offer);
+    } else if (data.type === 'ACHAT') {
+      const { offerId, quantity } = data.message;
+      if (offersById[offerId]) {
+        // Si la quantité achetée est inférieure à la quantité disponible
+        if (offersById[offerId].quantityIn > quantity) {
+          offersById[offerId].quantityIn -= quantity;
+          renderOffer(offersById[offerId]);
+        } else {
+          // Achat total, on supprime la carte
+          const card = document.getElementById(`offer-${offerId}`);
+          if (card) card.remove();
+          delete offersById[offerId];
+        }
+      }
+    }
+  }
+
+  const ws = new WebSocket(WS_BASE);
+  ws.onopen = () => console.log('WebSocket connecté');
+  ws.onclose = () => console.log('WebSocket déconnecté');
+  ws.onmessage = event => {
+    try {
+      const data = JSON.parse(event.data);
+      handleWSMessage(data);
+    } catch (e) {
+      console.error('Erreur parsing message WebSocket:', e);
+    }
+  };
+</script>
+</body>
+</html>

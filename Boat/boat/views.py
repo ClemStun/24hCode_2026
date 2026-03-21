@@ -1,5 +1,6 @@
-from itertools import groupby
 import json
+import requests
+from itertools import groupby
 from operator import attrgetter
 
 from django.shortcuts import render, redirect
@@ -10,6 +11,17 @@ from .models import Case, CurrentState, Keybind
 # Create your views here.
 def index(request):
     return redirect('start-screen')
+
+def market(request):
+    resp = requests.get(
+        'http://ec2-15-237-116-133.eu-west-3.compute.amazonaws.com:8443/marketplace/offers',
+        headers={
+            "codinggame-id": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb2RpbmdnYW1lIiwic3ViIjoiMDAyNjQyYzItYmJiMS00OTdkLWFiZTItMDU5ZTA2MGJhNzExIiwicm9sZXMiOlsiVVNFUiJdfQ.bTbRXfHkvrBHYexewru3uX7x3j8L-GfMnXzymkxbU2k"
+        }
+    )
+    offers = resp.json()
+    return render(request, 'market.html', {'offers': offers})
+
 
 def start_screen(request):
     return render(request, 'start-screen.html')
