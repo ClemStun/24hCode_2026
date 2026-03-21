@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages Broker</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        #messages { border: 1px solid #ccc; padding: 1em; height: 300px; overflow-y: scroll; background: #f9f9f9; }
+        .msg { margin-bottom: 1em; }
+    </style>
+</head>
+<body>
+    <h2>Messages reçus du broker</h2>
+    <div id="messages"></div>
+    <script>
+        async function fetchMessages() {
+            const res = await fetch('/api/broker/messages/');
+            const data = await res.json();
+            const container = document.getElementById('messages');
+            container.innerHTML = '';
+            data.messages.forEach(msg => {
+                const div = document.createElement('div');
+                div.className = 'msg';
+                div.textContent = msg;
+                container.appendChild(div);
+            });
+        }
+        setInterval(fetchMessages, 1000);
+        fetchMessages();
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: #0f172a;
+  overflow: hidden;
+}
+
+/* Background glow */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 20%, #00f5ff33, transparent),
+              radial-gradient(circle at 80% 80%, #ff00ff22, transparent);
+  filter: blur(80px);
+  z-index: -1;
+}
+
+/* Container */
+.container {
+  padding: 40px;
+  color: white;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+/* Glass card */
+.card {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+
+  box-shadow:
+    0 0 20px rgba(0,255,255,0.15),
+    inset 0 0 10px rgba(255,255,255,0.05);
+
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow:
+    0 0 30px rgba(0,255,255,0.4),
+    inset 0 0 15px rgba(255,255,255,0.1);
+}
+
+/* Text */
+.card h2 {
+  margin-bottom: 10px;
+  color: #00f5ff;
+}
+
+.card p {
+  opacity: 0.8;
+}
+
+/* Animation entrée */
+.card {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
