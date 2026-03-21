@@ -21,12 +21,16 @@ class Api {
         return { ...this._pendingRequests };
     }
 
+    constructor(baseUrl) {
+        this._baseUrl = baseUrl || window.location.origin;
+    }
+
     async get(endpoint, options = {}) {
         if (this._shudown) {
             return;
         }
 
-        const url = new URL(endpoint, window.location.origin);
+        const url = new URL(endpoint, this._baseUrl);
         Object.entries(options.data ?? {}).forEach(([key, value]) => url.searchParams.append(key, value));
         delete options.data;
 
@@ -61,7 +65,8 @@ class Api {
 
         this._requests.post[endpoint]?.abort();
         this._requests.post[endpoint] = new AbortController();
-        const request = fetch(endpoint, {
+        const url = new URL(endpoint, this._baseUrl);
+        const request = fetch(url, {
             ...options,
             method: 'POST',
             headers: {
@@ -95,7 +100,8 @@ class Api {
 
         this._requests.put[endpoint]?.abort();
         this._requests.put[endpoint] = new AbortController();
-        const request = fetch(endpoint, {
+        const url = new URL(endpoint, this._baseUrl);
+        const request = fetch(url, {
             ...options,
             method: 'PUT',
             headers: {
@@ -126,7 +132,8 @@ class Api {
 
         this._requests.delete[endpoint]?.abort();
         this._requests.delete[endpoint] = new AbortController();
-        const request = fetch(endpoint, {
+        const url = new URL(endpoint, this._baseUrl);
+        const request = fetch(url, {
             ...options,
             method: 'DELETE',
             headers: {
@@ -155,6 +162,5 @@ class Api {
     }
 }
 
-const api = new Api();
-export { api };
-export default api;
+const api = new Api(window.location.origin);
+export { api, Api };

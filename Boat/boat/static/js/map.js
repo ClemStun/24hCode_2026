@@ -15,11 +15,11 @@ class Map extends Game {
     _map = document.getElementById('game-map');
     _mapContainer = document.getElementById('map-container');
 
-    _zoomLevel = 2;
-    static _tileSize = [16, 32, 64, 128, 192, 256];
+    _zoomLevel = 3;
+    static _tileSize = [20, 40, 64, 80, 96, 128, 192, 256];
 
     _tiles = [];
-    _currentPosition = { x: 0, y: 0 };
+    _currentPosition = { x: 0, y: 0, direction: undefined };
     _currentView = { startX: 0, startY: 0, endX: 0, endY: 0 };
 
     init(data) {
@@ -32,6 +32,7 @@ class Map extends Game {
         }
 
         this.renderMap();
+        this.renderBoat();
     }
 
     renderMap() {
@@ -78,8 +79,20 @@ class Map extends Game {
         });
     }
 
-    setCurrentPosition(x, y) {
-        this._currentPosition = { x, y };
+    renderBoat() {
+        document.querySelectorAll('.boat').forEach(el => el.remove());
+        const tile = document.querySelector(`[data-x="${this._currentPosition.x}"][data-y="${this._currentPosition.y}"]`);
+        if (tile) {
+            tile.classList.add('boat');
+            tile.setAttribute('data-type', 'sea');
+            if (this._currentPosition.direction) {
+                tile.classList.add(`boat-${this._currentPosition.direction}`);
+            }
+        }
+    }
+
+    setCurrentPosition(x, y, direction) {
+        this._currentPosition = { x, y, direction };
     }
 
     onTileChanged(tile) {

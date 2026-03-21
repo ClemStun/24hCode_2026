@@ -16,6 +16,7 @@ class CurrentState(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     position_x = models.IntegerField(default=0)
     position_y = models.IntegerField(default=0)
+    direction = models.CharField(max_length=255, default='down')
 
     boisium = models.IntegerField(default=0)
     feronium = models.IntegerField(default=0)

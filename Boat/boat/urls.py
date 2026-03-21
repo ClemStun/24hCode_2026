@@ -6,4 +6,5 @@ urlpatterns = [
     path('start-screen/', views.start_screen, name='start-screen'),
     path('map/', views.map, name='map'),
     path('api/keybinds/', views.keybinds, name='keybinds'),
+    path('api/tiles/import/', views.import_tiles, name='import-tiles'),
 ]

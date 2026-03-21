@@ -15,7 +15,7 @@ def start_screen(request):
     return render(request, 'start-screen.html')
 
 def map(request):
-    state = CurrentState.objects.first()
+    state = CurrentState.objects.first() or CurrentState.objects.create()
     tiles = Case.objects.all()
     tiles_list = [
         {
@@ -30,7 +30,11 @@ def map(request):
 
     data = {
         'tiles': tiles_list,
-        'currentPosition': {'x': state.position_x, 'y': state.position_y},
+        'currentPosition': {
+            'x': state.position_x,
+            'y': state.position_y,
+            'direction': state.direction
+        },
         'resources': {
             'boisium': state.boisium,
             'feronium': state.feronium,
@@ -44,7 +48,7 @@ def map(request):
         }
     }
 
-    return render(request, 'map.html', {'data': json.dumps(data)})
+    return render(request, 'map.html', {'data': data})
 
 def keybinds(request):
     if request.method == 'GET':
@@ -84,3 +88,32 @@ def update_keybinds(request):
 
     # Réponse No Content (204) sans body
     return HttpResponse(status=204)
+
+def import_tiles(request):
+    if request.method == 'POST':
+        data = get_tiles_data(request)
+        if isinstance(data, dict) and 'map' in data:
+            data = data['map']
+
+        if isinstance(data, dict):
+            data = data.values()
+
+        for tile in data:
+            Case.objects.update_or_create(
+                id=tile['id'],
+                x=tile['x'],
+                y=tile['y'],
+                type=tile['type'],
+                zone=tile['zone']
+            )
+    else:
+        return HttpResponseNotAllowed(['POST'])
+    
+def get_tiles_data(request):
+    try:
+        return json.loads(request.body)
+    except Exception:
+        try:
+            return json.load(request.FILES['file'])
+        except Exception:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON or file'}, status=400)

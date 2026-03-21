@@ -9,10 +9,47 @@
         <div id="game-container">
             <div id="game-hud">
                 <div id="game-hud-bars">
-                    <div id="boisium-bar"></div>
-                    <div id="feronium-bar"></div>
-                    <div id="charbonium-bar"></div>
-                    <div id="boat-bar"></div>
+                    <div id="boisium-bar" class="resource-bar">
+                        <div class="bar-icon" style="--bar-icon-color: #71593F;">
+                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Boisium" class="bar-icon-img">
+                        </div>
+                        <div class="bar-frame">
+                            <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame" class="bar-frame-img">
+                            <div class="bar-frame-text">{{ data.resources.boisium }}</div>
+                        </div>
+                    </div>
+                    <div id="feronium-bar" class="resource-bar">
+                        <div class="bar-icon" style="--bar-icon-color: #B5B5B5;">
+                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Feronium" class="bar-icon-img">
+                        </div>
+                        <div class="bar-frame">
+                            <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame" class="bar-frame-img">
+                            <div class="bar-frame-text">{{ data.resources.feronium }}</div>
+                        </div>
+                    </div>
+                    <div id="charbonium-bar" class="resource-bar">
+                        <div class="bar-icon" style="--bar-icon-color: #3A3D30;">
+                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Charbonium" class="bar-icon-img">
+                        </div>
+                        <div class="bar-frame">
+                            <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame" class="bar-frame-img">
+                            <div class="bar-frame-text">{{ data.resources.charbonium }}</div>
+                        </div>
+                    </div>
+                    <div id="gold-bar" class="resource-bar">
+                        <div class="bar-icon" style="--bar-icon-color: #DAC276;">
+                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Gold" class="bar-icon-img">
+                        </div>
+                        <div class="bar-frame">
+                            <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame" class="bar-frame-img">
+                            <div class="bar-frame-text">{{ data.resources.gold }}</div>
+                        </div>
+                    </div>
+                    <div id="boat-bar" class="boat-bar">
+                        <div class="bar-icon" style="--bar-icon-color: #8F6978;">
+                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Boat" class="bar-icon-img">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="game-map">

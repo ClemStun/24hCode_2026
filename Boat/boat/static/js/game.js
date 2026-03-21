@@ -1,5 +1,5 @@
 import { keybindsManager } from "./keybinds.js";
-import api from "./api.js";
+import { api } from "./api.js";
 
 class GameEvent extends Event {
     constructor(type, options) {
