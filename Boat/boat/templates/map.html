@@ -46,8 +46,19 @@
                         </div>
                     </div>
                     <div id="boat-bar" class="boat-bar">
-                        <div class="bar-icon" style="--bar-icon-color: #8F6978;">
-                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Boat" class="bar-icon-img">
+                        <div class="move-bar">
+                            <div class="bar-icon" style="--bar-icon-color: #8F6978;">
+                                <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Boat" class="bar-icon-img">
+                            </div>
+                            <div class="movement-bar-frame">
+                                <img src="{% static 'assets/images/movement-bar.png' %}" alt="Bar Frame" class="movement-bar-frame-img">
+                                <div id="move-progress" class="move-progress" style="--move-progress: {{ data.boat.remainingMovement }} / {{ data.boat.maxMovement }};"></div>
+                                <div id="move-progress-text" class="move-progress-text">{{ data.boat.remainingMovement }} / {{ data.boat.maxMovement }}</div>
+                            </div>
+                        </div>
+                        <div class="level-bar">
+                            <img src="{% static 'assets/images/boat-bar-frame.png' %}" alt="Level" class="level-img">
+                            <div class="level-text">NIVEAU {{ data.boat.level }}</div>
                         </div>
                     </div>
                 </div>
