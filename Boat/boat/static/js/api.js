@@ -26,7 +26,7 @@ class Api {
     }
 
     async get(endpoint, options = {}) {
-        if (this._shudown) {
+        if (this._shutdown) {
             return;
         }
 
@@ -62,7 +62,7 @@ class Api {
     }
 
     async post(endpoint, options = {}) {
-        if (this._shudown) {
+        if (this._shutdown) {
             return;
         }
 
@@ -73,11 +73,11 @@ class Api {
             'X-CSRFToken': csrfToken
         };
 
-        if (data.headers) {
-            delete data.headers['Content-Type'];
-            delete data.headers['X-CSRFToken'];
-            Object.assign(headers, data.headers);
-            delete data.headers;
+        if (options.headers) {
+            delete options.headers['Content-Type'];
+            delete options.headers['X-CSRFToken'];
+            Object.assign(headers, options.headers);
+            delete options.headers;
         }
 
         if (data instanceof FormData) {
@@ -109,7 +109,7 @@ class Api {
     }
 
     async put(endpoint, options = {}) {
-        if (this._shudown) {
+        if (this._shutdown) {
             return;
         }
 
@@ -120,11 +120,11 @@ class Api {
             'X-CSRFToken': csrfToken
         };
 
-        if (data.headers) {
-            delete data.headers['Content-Type'];
-            delete data.headers['X-CSRFToken'];
-            Object.assign(headers, data.headers);
-            delete data.headers;
+        if (options.headers) {
+            delete options.headers['Content-Type'];
+            delete options.headers['X-CSRFToken'];
+            Object.assign(headers, options.headers);
+            delete options.headers;
         }
 
         if (data instanceof FormData) {
@@ -156,8 +156,19 @@ class Api {
     }
 
     async delete(endpoint, options = {}) {
-        if (this._shudown) {
+        if (this._shutdown) {
             return;
+        }
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+        };
+        if (options.headers) {
+            delete options.headers['Content-Type'];
+            delete options.headers['X-CSRFToken'];
+            Object.assign(headers, options.headers);
+            delete options.headers;
         }
 
         this._requests.delete[endpoint]?.abort();
@@ -166,10 +177,7 @@ class Api {
         const request = fetch(url, {
             ...options,
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
-            },
+            headers: headers,
             signal: this._requests.delete[endpoint].signal
         });
 
@@ -187,7 +195,7 @@ class Api {
     }
 
     async onShutdown() {
-        this._shudown = true;
+        this._shutdown = true;
         await Promise.all(Object.values(this._pendingRequests));
     }
 }
