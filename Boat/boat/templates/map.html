@@ -76,19 +76,77 @@
                     </div>
                 </div>
             </div>
+            <div id="game-hud-buttons">
+                <button id="market-button" class="btn btn-clear btn-icon-big btn-icon" onclick="showMarket();">
+                    <img src="{% static 'assets/icons/cart.svg' %}" alt="Market">
+                </button>
+            </div>
         </div>
         <div id="game-map">
             <div id="map-container"></div>
         </div>
-        <div id="game-menu" style="display: none;">
-            <div id="game-menu-content">
-                <button id="game-menu-exit" onclick="closeMenu();">
+        <div id="game-menu" class="modal" style="display: none;">
+            <div id="game-menu-content" class="modal-content">
+                <button id="game-menu-exit" class="modal-exit exit" onclick="closeMenu();">
                     <img src="{% static 'assets/icons/close.svg' %}" alt="Close Menu" class="game-menu-exit-img">
                 </button>
                 <div id="game-menu-title">Menu</div>
                 <div id="game-menu-choices">
                     <div class="game-menu-choice current-choice" data-callback="end">RETURN TO MENU</div>
                     <div class="game-menu-choice" data-callback="openOptions">OPTIONS</div>
+                </div>
+            </div>
+        </div>
+        <div id="market-modal" class="modal" style="display: none;">
+            <div id="market-modal-content" class="modal-content">
+                <div id="market-modal-title">
+                    <div>Market Place</div>
+                    <button id="market-modal-exit" class="exit" onclick="closeMarket();">
+                        <img src="{% static 'assets/icons/close.svg' %}" alt="Close Menu" class="game-menu-exit-img">
+                    </button>
+                </div>
+                <div id="market-content">
+                    <div id="market-offers">
+                        <div id="offers-pagination"></div>
+                        <div id="offers-container"></div>
+                    </div>
+                    <button class="btn btn-primary btn-fill" onclick="showOffer();">Créer une offre</button>
+                </div>
+            </div>
+        </div>
+        <div id="offer-modal" class="modal" style="display: none;">
+            <div id="offer-modal-content" class="modal-content">
+                <button id="offer-modal-exit" class="modal-exit exit" onclick="closeOffer();">
+                    <img src="{% static 'assets/icons/close.svg' %}" alt="Close Menu" class="game-menu-exit-img">
+                </button>
+                <div id="offer-modal-title">
+                    <div>Créer une offre</div>
+                </div>
+                <div id="offer-content">
+                    <form id="offer-form" class="form">
+                        <div class="form-field">
+                            <label for="offer-resource">Ressource:</label>
+                            <select id="offer-resource" name="offer-resource">
+                                <option value="boisium">Boisium</option>
+                                <option value="feronium">Feronium</option>
+                                <option value="charbonium">Charbonium</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col form-field">
+                                <label for="offer-quantity">Quantité:</label>
+                                <input type="number" id="offer-quantity" name="offer-quantity" min="1" required>
+                            </div>
+                            <div class="form-col form-field">
+                                <label for="offer-price">Prix par unité:</label>
+                                <input type="number" id="offer-price" name="offer-price" min="1" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <button type="button" class="btn btn-primary btn-fill" onclick="submitOffer();">Créer
+                                l'offre</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -109,6 +167,7 @@
     import hud from "{% static 'js/hud.js' %}";
     hud.init();
 </script>
+<script type="module" src="{% static 'js/market.js' %}"></script>
 <script type="module">
     import move from "{% static 'js/move.js' %}";
     console.log('init');

@@ -26,6 +26,86 @@ h6 {
     padding: 0;
 }
 
+.btn {
+    --btn-width: 200px;
+    --btn-height: 44px;
+    padding: 8px 16px;
+    font-family: 'SpaceNotoriousRounded', sans-serif;
+
+    width: var(--btn-width);
+    height: var(--btn-height);
+    background-color: #F6F0D8;
+    border: 2px solid #8F6978;
+    border-radius: 8px;
+}
+
+.btn.btn-primary {
+    background-color: #F6F0D8;
+    border: 2px solid #8F6978;
+}
+
+.btn.btn-alt {
+    --btn-width: 148px;
+    --btn-height: unset;
+    border: 2px solid #F6F0D8;
+    background: #DAC276;
+}
+
+.btn.btn-success {
+    background-color: #91DA76;
+}
+
+.btn.btn-danger {
+    background-color: #DA7676;
+}
+
+.btn.btn-clear {
+    background: rgba(255, 255, 255, 0.64);
+}
+
+.btn.btn-icon {
+    --btn-height: unset;
+    --btn-width: unset;
+    max-width: 44px;
+    max-height: 44px;
+    aspect-ratio: 1;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn.btn-icon.btn-icon-big {
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.btn.btn-fill {
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form .form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form .form-col {
+    align-self: stretch;
+}
+
 /* #region Start Game Screen */
 
 .start-game-screen {
@@ -142,29 +222,29 @@ h6 {
     width: min-content;
 }
 
-#game-container #game-hud #game-hud-bars .bar-icon {
+.bar-icon {
     --bar-icon-size: 72px;
     --bar-icon-color: black;
     position: relative;
     z-index: 2;
 }
 
-#game-container #game-hud #game-hud-bars .bar-icon .bar-icon-img {
+.bar-icon .bar-icon-img {
     position: relative;
     z-index: 1;
     width: var(--bar-icon-size);
     height: var(--bar-icon-size);
 }
 
-#game-container #game-hud #game-hud-bars .bar-icon::before {
+.bar-icon::before {
     content: '';
     position: absolute;
-    width: calc(var(--bar-icon-size) - 4px);
-    height: calc(var(--bar-icon-size) - 4px);
+    width: calc(var(--bar-icon-size) - 6px);
+    height: calc(var(--bar-icon-size) - 6px);
     background-color: var(--bar-icon-color);
     border-radius: 50%;
-    top: 2px;
-    left: 2px;
+    top: 3px;
+    left: 3px;
 }
 
 #game-container #game-hud #game-hud-bars .boat-bar .bar-icon {
@@ -326,6 +406,19 @@ h6 {
 
 }
 
+#game-container #game-hud #game-hud-buttons {
+    position: absolute;
+    bottom: 32px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#game-container #game-hud #game-hud-buttons button {
+    pointer-events: all;
+}
+
 
 /* #endregion */
 
@@ -443,7 +536,7 @@ h6 {
 
 /* #region Menu */
 
-#game-menu {
+.modal {
     position: absolute;
     top: 0;
     left: 0;
@@ -454,12 +547,13 @@ h6 {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 999;
 }
 
-#game-menu #game-menu-content {
+.modal .modal-content {
     position: relative;
-    padding: 32px 0;
-    width: 508px;
+    padding: 32px;
+    min-width: 444px;
 
     display: flex;
     flex-direction: column;
@@ -472,18 +566,28 @@ h6 {
     background: rgba(255, 255, 255, 0.83);
 }
 
-#game-menu #game-menu-exit {
-    position: absolute;
-    right: -22px;
-    top: -22px;
-    width: 44px;
-    height: 44px;
+.exit {
+    --button-size: 44px;
+    width: var(--button-size);
+    height: var(--button-size);
     background-color: #DA7676;
     border-radius: 8px;
 
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.modal .modal-content .modal-exit {
+    position: absolute;
+    right: calc(-1 * var(--button-size) / 2);
+    top: calc(-1 * var(--button-size) / 2);
+}
+
+.modal .modal-content .modal-exit {
+    position: absolute;
+    right: calc(-1 * var(--button-size) / 2);
+    top: calc(-1 * var(--button-size) / 2);
 }
 
 #game-menu #game-menu-exit>img {
@@ -523,6 +627,113 @@ h6 {
 
     /* Blink animation */
     animation: blink-vector 1s steps(2, start) infinite;
+}
+
+/* #endregion */
+
+/* #region Market */
+
+#market-modal .modal-content #market-modal-title {
+    font-size: 24px;
+    color: #202020;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 64px;
+    width: 100%;
+}
+
+#market-modal .modal-content #market-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#market-modal .modal-content #market-content #market-offers {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-pagination {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-pagination .page {
+    width: 44px;
+    height: 44px;
+    background: #E4E4E4;
+    border: 2px solid #8F6978;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-pagination .page.current-page {
+    background: #715B5B;
+    color: white;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container .offer {
+    padding: 24px 32px;
+    display: flex;
+    gap: 32px;
+    border: 2px solid #8F6978;
+    background: #E5D2DA;
+    border-radius: 8px;
+    color: #202020;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container .offer .offer-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container .offer .offer-details .offer-title {
+    color: #202020;
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container .offer .offer-actions {
+    display: flex;
+    gap: 16px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container .offer .offer-actions .offer-quantity {
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container .offer .offer-actions .offer-quantity>img {
+    height: 22.5px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container .offer .offer-actions .offer-buttons {
+    display: flex;
+    justify-content: end;
+    flex-grow: 1;
+    gap: 8px;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container .offer .offer-actions .offer-buttons .accept-offer {
+    max-width: 300%;
 }
 
 /* #endregion */

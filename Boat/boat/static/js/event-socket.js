@@ -1,4 +1,4 @@
-const ws = new WebSocket(`ws://${window.location.host}/ws`);
+const ws = new WebSocket(`ws://127.0.0.1:8001/ws`);
 
 class EventSocket {
     _callbacks = {};
@@ -8,9 +8,9 @@ class EventSocket {
         this._socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
             Object.entries(this._callbacks)
-                .filter(([key, _]) => key === data.type)
+                .filter(([key, _]) => key === data.type || key === 'Any')
                 .forEach(([_, callback]) => {
-                    callback(data);
+                    callback.forEach(cb => cb(data));
                 });
         };
     }
