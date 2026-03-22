@@ -553,12 +553,11 @@ h6 {
 .modal .modal-content {
     position: relative;
     padding: 32px;
-    min-width: 444px;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     gap: 16px;
 
     border: 2px solid #8F697D;
@@ -633,6 +632,13 @@ h6 {
 
 /* #region Market */
 
+#market-modal .modal-content {
+    width: 27vw;
+    min-height: 72vh;
+    max-height: 72vh;
+    height: 100%;
+}
+
 #market-modal .modal-content #market-modal-title {
     font-size: 24px;
     color: #202020;
@@ -645,9 +651,11 @@ h6 {
 
 #market-modal .modal-content #market-content {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    justify-content: space-between;
 }
 
 #market-modal .modal-content #market-content #market-offers {
@@ -693,6 +701,10 @@ h6 {
     background: #E5D2DA;
     border-radius: 8px;
     color: #202020;
+}
+
+#market-modal .modal-content #market-content #market-offers #offers-container .offer:has(.btn-danger) {
+    background-color: #F6F0D8;
 }
 
 #market-modal .modal-content #market-content #market-offers #offers-container .offer .offer-details {

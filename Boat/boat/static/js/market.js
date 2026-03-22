@@ -10,7 +10,7 @@ class Market {
     _marketModal = document.getElementById('market-modal');
     _offerPagination = this._marketModal.querySelector('#offers-pagination');
     _offerContainer = this._marketModal.querySelector('#offers-container');
-    
+
     _offerModal = document.getElementById('offer-modal');
     _offerResourceInput = this._offerModal.querySelector('#offer-resource');
     _offerQuantityInput = this._offerModal.querySelector('#offer-quantity');
@@ -56,7 +56,7 @@ class Market {
         }
 
         const offers = this._offers.slice((this._currentPage - 1) * this._offersPerPage, this._currentPage * this._offersPerPage);
-        
+
         this._offerPagination.innerHTML = '';
         for (let i = 1; i <= pagesCount; i++) {
             this._offerPagination.appendChild(this._getPageContent(i));
@@ -99,7 +99,9 @@ class Market {
                 quantityIn: quantity,
                 pricePerResource: price
             },
-            headers: Market._header
+            headers: Market._header,
+            successMessage: `Offre de ${quantity} ${resource} à ${price} Or créée !`,
+            errorMessage: `Échec de la création de l'offre.`
         });
 
         this._offers.push(offer);
@@ -137,7 +139,7 @@ class Market {
         ` : '';
         div.innerHTML = `
             <div class="bar-icon" style="--bar-icon-color: ${Market._resourceColorMapping[offer.resourceType.toLowerCase()]};">
-                <img src="/static/assets/icons/resource-icon.svg" alt="${resourceName}" class="bar-icon-img">
+                <img src="/static/assets/icons/${resourceName}.svg" alt="${resourceName}" class="bar-icon-img">
             </div>
             <div class="offer-details">
                 <div class="offer-title">
@@ -146,7 +148,7 @@ class Market {
                 </div>
                 <div class="offer-actions">
                     <div class="offer-quantity btn btn-alt">
-                        <img src="/static/assets/icons/resource-icon-bis.svg" alt="Or" class="offer-quantity-icon">
+                        <img src="/static/assets/icons/gold.svg" alt="Or" class="offer-quantity-icon">
                         <div>${offer.pricePerResource} Or</div>
                     </div>
                     <div class="offer-buttons">
