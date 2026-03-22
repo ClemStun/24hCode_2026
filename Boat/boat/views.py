@@ -222,10 +222,12 @@ def get_route_to_position(request):
             state = CurrentState.objects.first()
             tx = int(request.GET.get('target_x'))
             ty = int(request.GET.get('target_y'))
+            print(f"Calculating route from ({state.position_x}, {state.position_y}) to ({tx}, {ty}) with max movement {state.max_movement}")
             route = trouver_itineraire_navire((state.position_x, state.position_y), (tx, ty), state.max_movement)
             # Ici, vous pouvez ajouter la logique pour calculer la route vers la position cible
             return JsonResponse({'status': 'success', 'route': route})
-        except Exception:
+        except Exception as e:
+            print(e)
             return JsonResponse({'status': 'error', 'message': 'Invalid parameters'}, status=400)
     else:
         return HttpResponseNotAllowed(['GET'])

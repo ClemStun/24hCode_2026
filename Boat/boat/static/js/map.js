@@ -28,7 +28,7 @@ class Map extends Game {
     _handleMoveDownMenuCallback = this._handleMoveDownMenu.bind(this);
     _handleActionMenuCallback = this._handleActionMenu.bind(this);
 
-    init(data) {
+    init(data, move) {
         super.init();
 
         this._currentPosition = data.currentPosition || { x: 0, y: 0 };
@@ -43,6 +43,7 @@ class Map extends Game {
                 event.target.classList.add('selected');
                 const x = parseInt(event.target.getAttribute('data-x'), 10);
                 const y = parseInt(event.target.getAttribute('data-y'), 10);
+                move.moveTo(x, y);
             }
         });
 

@@ -1,4 +1,5 @@
 {% load static %}
+{% csrf_token %}
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -160,17 +161,9 @@
     boat.nextLevel();
 </script>
 <script type="module">
-    import { map } from "{% static 'js/map.js' %}";
-    map.init({{ data| safe }});
-</script>
-<script type="module">
-    import hud from "{% static 'js/hud.js' %}";
-    hud.init();
-</script>
-<script type="module" src="{% static 'js/market.js' %}"></script>
-<script type="module">
     import move from "{% static 'js/move.js' %}";
-    console.log('init');
+    import { map } from "{% static 'js/map.js' %}";
+    map.init({{ data| safe }}, move);
 
     document.addEventListener('keydown', async (event) => {
         console.log(event);
@@ -194,3 +187,8 @@
         }
     });
 </script>
+<script type="module">
+    import hud from "{% static 'js/hud.js' %}";
+    hud.init();
+</script>
+<script type="module" src="{% static 'js/market.js' %}"></script>

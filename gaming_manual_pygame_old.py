@@ -5,7 +5,7 @@ import os
 import sys
 import heapq
 
-API_URL = "http://ec2-15-237-116-133.eu-west-3.compute.amazonaws.com:8443"
+API_URL = "http://ec2-35-180-187-43.eu-west-3.compute.amazonaws.com:8443"
 TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb2RpbmdnYW1lIiwic3ViIjoiMDAyNjQyYzItYmJiMS00OTdkLWFiZTItMDU5ZTA2MGJhNzExIiwicm9sZXMiOlsiVVNFUiJdfQ.bTbRXfHkvrBHYexewru3uX7x3j8L-GfMnXzymkxbU2k"
 HEADERS = {"codinggame-id": TOKEN}
 MAP_FILE = "map_discovered.json"
@@ -94,7 +94,7 @@ def trouver_itineraire_navire(depart, arrivee, iles, deplacement_max):
     return chemin
 
 def get_player_pos():
-        return (-30, 4)
+        return (-54, 30)
 
 def get_map():
     if not os.path.exists(MAP_FILE):

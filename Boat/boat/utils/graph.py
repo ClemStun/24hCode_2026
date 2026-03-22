@@ -4,7 +4,7 @@ from ..models import Case
 
 def get_known_islands():
     response = requests.get(
-        'http://ec2-15-237-116-133.eu-west-3.compute.amazonaws.com:8443/marketplace/offers',
+        'http://ec2-15-237-116-133.eu-west-3.compute.amazonaws.com:8443/players/details',
         headers={
             "codinggame-id": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb2RpbmdnYW1lIiwic3ViIjoiMDAyNjQyYzItYmJiMS00OTdkLWFiZTItMDU5ZTA2MGJhNzExIiwicm9sZXMiOlsiVVNFUiJdfQ.bTbRXfHkvrBHYexewru3uX7x3j8L-GfMnXzymkxbU2k"
         }
