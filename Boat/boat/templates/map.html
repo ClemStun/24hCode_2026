@@ -69,7 +69,10 @@
                     </div>
                     <div class="level-bar">
                         <img src="{% static 'assets/images/boat-bar-frame.png' %}" alt="Level" class="level-img">
-                        <div class="level-text">NIVEAU {{ data.boat.level }}</div>
+                        <div>
+                            <div class="level-text">NIVEAU {{ data.boat.level }}</div>
+                            <div class="info" onclick="showBoatInfo();"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,6 +97,11 @@
 
 </html>
 <script type="module">
+    import { boat } from "{% static 'js/boat.js' %}";
+    console.log('init boat');
+    boat.nextLevel();
+</script>
+<script type="module">
     import { map } from "{% static 'js/map.js' %}";
     map.init({{ data| safe }});
 </script>
@@ -103,7 +111,11 @@
 </script>
 <script type="module">
     import move from "{% static 'js/move.js' %}";
+    console.log('init');
+
     document.addEventListener('keydown', async (event) => {
+        console.log(event);
+
         if (event.key == 'z') {
             await move.moveNext('N');
         } else if (event.key == 's') {

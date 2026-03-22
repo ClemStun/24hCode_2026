@@ -1,4 +1,5 @@
-const csrfToken = getCookie('csrftoken');
+// const csrfToken = getCookie('csrftoken');
+const csrfToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb2RpbmdnYW1lIiwic3ViIjoiMDAyNjQyYzItYmJiMS00OTdkLWFiZTItMDU5ZTA2MGJhNzExIiwicm9sZXMiOlsiVVNFUiJdfQ.bTbRXfHkvrBHYexewru3uX7x3j8L-GfMnXzymkxbU2k';
 
 function getCookie(name) {
     let cookieValue = null;
@@ -65,7 +66,6 @@ class Api {
         if (this._shudown) {
             return;
         }
-        console.log("ALLOOOOLOLOLOLOLOLOLOLO")
 
         const data = options.data ?? {};
         delete options.data;
