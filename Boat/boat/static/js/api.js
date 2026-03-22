@@ -59,7 +59,7 @@ class Api {
             throw new Error(`GET ${endpoint} failed with status ${response.status}`);
         }
 
-        console.log(response.json());
+        console.log(await response.json());
         return await response.json();
     }
 
