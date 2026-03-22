@@ -1,90 +1,101 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <title>Carte</title>
-        <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    </head>
-    <body>
-        <div id="game-container">
-            <div id="game-hud">
-                <div id="game-hud-bars">
-                    <div id="boisium-bar" class="resource-bar">
-                        <div class="bar-icon" style="--bar-icon-color: #71593F;">
-                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Boisium" class="bar-icon-img">
-                        </div>
-                        <div class="bar-frame">
-                            <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame" class="bar-frame-img">
-                            <div class="bar-frame-text">{{ data.resources.boisium }}</div>
-                        </div>
+
+<head>
+    <title>Carte</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="game-hud">
+            <div id="game-hud-bars">
+                <div id="boisium-bar" class="resource-bar">
+                    <div class="bar-icon" style="--bar-icon-color: #71593F;">
+                        <img src="{% static 'assets/icons/wood.svg' %}" alt="Boisium" class="bar-icon-img">
                     </div>
-                    <div id="feronium-bar" class="resource-bar">
-                        <div class="bar-icon" style="--bar-icon-color: #B5B5B5;">
-                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Feronium" class="bar-icon-img">
-                        </div>
-                        <div class="bar-frame">
-                            <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame" class="bar-frame-img">
-                            <div class="bar-frame-text">{{ data.resources.feronium }}</div>
-                        </div>
-                    </div>
-                    <div id="charbonium-bar" class="resource-bar">
-                        <div class="bar-icon" style="--bar-icon-color: #3A3D30;">
-                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Charbonium" class="bar-icon-img">
-                        </div>
-                        <div class="bar-frame">
-                            <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame" class="bar-frame-img">
-                            <div class="bar-frame-text">{{ data.resources.charbonium }}</div>
-                        </div>
-                    </div>
-                    <div id="gold-bar" class="resource-bar">
-                        <div class="bar-icon" style="--bar-icon-color: #DAC276;">
-                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Gold" class="bar-icon-img">
-                        </div>
-                        <div class="bar-frame">
-                            <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame" class="bar-frame-img">
-                            <div class="bar-frame-text">{{ data.resources.gold }}</div>
-                        </div>
-                    </div>
-                    <div id="boat-bar" class="boat-bar">
-                        <div class="move-bar">
-                            <div class="bar-icon" style="--bar-icon-color: #8F6978;">
-                                <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Boat" class="bar-icon-img">
-                            </div>
-                            <div class="movement-bar-frame">
-                                <img src="{% static 'assets/images/movement-bar.png' %}" alt="Bar Frame" class="movement-bar-frame-img">
-                                <div class="move-progress-background"></div>
-                                <div id="move-progress" class="move-progress" style="--move-progress: {{ data.boat.remainingMovement }} / {{ data.boat.maxMovement }};"></div>
-                                <div id="move-progress-text" class="move-progress-text">{{ data.boat.remainingMovement }} / {{ data.boat.maxMovement }}</div>
-                            </div>
-                        </div>
-                        <div class="level-bar">
-                            <img src="{% static 'assets/images/boat-bar-frame.png' %}" alt="Level" class="level-img">
-                            <div class="level-text">NIVEAU {{ data.boat.level }}</div>
-                        </div>
+                    <div class="bar-frame">
+                        <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame"
+                            class="bar-frame-img">
+                        <div class="bar-frame-text">{{ data.resources.boisium }}</div>
                     </div>
                 </div>
-            </div>
-            <div id="game-map">
-                <div id="map-container"></div>
-            </div>
-            <div id="game-menu" style="display: none;">
-                <div id="game-menu-content">
-                    <button id="game-menu-exit" onclick="closeMenu();">
-                        <img src="{% static 'assets/icons/close.svg' %}" alt="Close Menu" class="game-menu-exit-img">
-                    </button>
-                    <div id="game-menu-title">Menu</div>
-                    <div id="game-menu-choices">
-                        <div class="game-menu-choice current-choice" data-callback="end">RETURN TO MENU</div>
-                        <div class="game-menu-choice" data-callback="openOptions">OPTIONS</div>
+                <div id="feronium-bar" class="resource-bar">
+                    <div class="bar-icon" style="--bar-icon-color: #B5B5B5;">
+                        <img src="{% static 'assets/icons/ore.svg' %}" alt="Feronium" class="bar-icon-img">
+                    </div>
+                    <div class="bar-frame">
+                        <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame"
+                            class="bar-frame-img">
+                        <div class="bar-frame-text">{{ data.resources.feronium }}</div>
+                    </div>
+                </div>
+                <div id="charbonium-bar" class="resource-bar">
+                    <div class="bar-icon" style="--bar-icon-color: #3A3D30;">
+                        <img src="{% static 'assets/icons/ore-coal.svg' %}" alt="Charbonium" class="bar-icon-img">
+                    </div>
+                    <div class="bar-frame">
+                        <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame"
+                            class="bar-frame-img">
+                        <div class="bar-frame-text">{{ data.resources.charbonium }}</div>
+                    </div>
+                </div>
+                <div id="gold-bar" class="resource-bar">
+                    <div class="bar-icon" style="--bar-icon-color: #DAC276;">
+                        <img src="{% static 'assets/icons/gold.svg' %}" alt="Gold" class="bar-icon-img">
+                    </div>
+                    <div class="bar-frame">
+                        <img src="{% static 'assets/images/resource-bar-frame.png' %}" alt="Bar Frame"
+                            class="bar-frame-img">
+                        <div class="bar-frame-text">{{ data.resources.gold }}</div>
+                    </div>
+                </div>
+                <div id="boat-bar" class="boat-bar">
+                    <div class="move-bar">
+                        <div class="bar-icon" style="--bar-icon-color: #8F6978;">
+                            <img src="{% static 'assets/icons/resource-icon.svg' %}" alt="Boat" class="bar-icon-img">
+                        </div>
+                        <div class="movement-bar-frame">
+                            <img src="{% static 'assets/images/movement-bar.png' %}" alt="Bar Frame"
+                                class="movement-bar-frame-img">
+                            <div class="move-progress-background"></div>
+                            <div id="move-progress" class="move-progress"
+                                style="--move-progress: {{ data.boat.remainingMovement }} / {{ data.boat.maxMovement }};">
+                            </div>
+                            <div id="move-progress-text" class="move-progress-text">{{ data.boat.remainingMovement }} /
+                                {{ data.boat.maxMovement }}</div>
+                        </div>
+                    </div>
+                    <div class="level-bar">
+                        <img src="{% static 'assets/images/boat-bar-frame.png' %}" alt="Level" class="level-img">
+                        <div class="level-text">NIVEAU {{ data.boat.level }}</div>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+        <div id="game-map">
+            <div id="map-container"></div>
+        </div>
+        <div id="game-menu" style="display: none;">
+            <div id="game-menu-content">
+                <button id="game-menu-exit" onclick="closeMenu();">
+                    <img src="{% static 'assets/icons/close.svg' %}" alt="Close Menu" class="game-menu-exit-img">
+                </button>
+                <div id="game-menu-title">Menu</div>
+                <div id="game-menu-choices">
+                    <div class="game-menu-choice current-choice" data-callback="end">RETURN TO MENU</div>
+                    <div class="game-menu-choice" data-callback="openOptions">OPTIONS</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
 <script type="module">
     import { map } from "{% static 'js/map.js' %}";
-    map.init({{ data|safe }});
+    map.init({{ data| safe }});
 </script>
 <script type="module">
     import hud from "{% static 'js/hud.js' %}";

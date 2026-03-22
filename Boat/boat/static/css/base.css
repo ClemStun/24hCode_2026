@@ -16,7 +16,12 @@ body {
     font-family: 'SpaceNotoriousRounded', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0;
     padding: 0;
 }
@@ -88,8 +93,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes blink-vector {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.2; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
 }
 
 /* #endregion */
@@ -162,7 +174,7 @@ h1, h2, h3, h4, h5, h6 {
 #game-container #game-hud #game-hud-bars .resource-bar .bar-frame {
     display: flex;
     position: relative;
-    padding: 16px 32px 16px 32px;
+    padding: 16px 32px 16px 24px;
     margin-left: -10.5px;
     height: 32px;
     width: 64px;
@@ -179,12 +191,10 @@ h1, h2, h3, h4, h5, h6 {
     flex-grow: 1;
     flex-basis: 0;
 
-    overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
-    
+
     color: white;
-    font-size: 16px;
+    font-size: 24px;
     font-weight: 900;
 
     display: flex;
@@ -229,7 +239,7 @@ h1, h2, h3, h4, h5, h6 {
 
     --move-progress: 0;
     width: calc(var(--move-progress) * 94%);
-    background-color: #FEA760;
+    background: linear-gradient(90deg, rgba(133, 12, 12, 1) 0%, rgba(214, 194, 17, 1) 500px);
 }
 
 #game-container #game-hud #game-hud-bars .boat-bar .move-bar .move-progress::after {
@@ -240,7 +250,6 @@ h1, h2, h3, h4, h5, h6 {
 
     width: 24px;
     height: 100%;
-    background-color: #FEA760;
     transform: rotate(45deg);
     border-radius: 8px;
 }
@@ -340,11 +349,39 @@ h1, h2, h3, h4, h5, h6 {
     min-width: var(--cell-size);
     min-height: var(--cell-size);
 
-    border-color: #EEE;
-    border-width: 0.5px;
-    border-style: solid;
+    border: none;
     position: relative;
-    background-color: black;
+    background-image: url('../assets/images/tiles/cloud.png');
+    background-color: white;
+}
+
+#game-container #game-map #map-container .map-cell[data-variant="2"],
+#game-container #game-map #map-container .map-cell[data-variant="4"] {
+    filter: brightness(0.9);
+}
+
+#game-container #game-map #map-container .map-cell:not(.boat):hover {
+    z-index: 2;
+    outline: rgb(141, 8, 8) solid 8px;
+}
+
+#game-container #game-map #map-container .map-cell:not(.boat):hover::after {
+    /* On récupère les deux valeurs et on les formate */
+    content: "(X : " attr(data-x) ", Y : " attr(data-y) ")";
+
+    /* Style de l'infobulle */
+    position: absolute;
+    background: black;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    top: -40px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    /* Positionnement au-dessus */
+    white-space: nowrap;
 }
 
 #game-container #game-map #map-container .map-cell.selected {
@@ -356,7 +393,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #game-container #game-map #map-container .map-cell[data-type="sand"] {
-    background: url(../assets/images/tiles/sand.svg) lightgray 50% / cover no-repeat;
+    background: url(../assets/images/tiles/sand.png) lightgray 50% / cover no-repeat;
 }
 
 #game-container #game-map #map-container .map-cell.boat::after {
@@ -437,7 +474,7 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 
-#game-menu #game-menu-exit > img {
+#game-menu #game-menu-exit>img {
     width: 16px;
 }
 

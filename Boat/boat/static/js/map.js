@@ -38,7 +38,7 @@ class Map extends Game {
         }
 
         this._mapContainer.addEventListener('click', (event) => {
-            if(event.target.classList.contains('map-cell')) {
+            if (event.target.classList.contains('map-cell')) {
                 document.querySelectorAll('.map-cell.selected').forEach(cell => cell.classList.remove('selected'));
                 event.target.classList.add('selected');
             }

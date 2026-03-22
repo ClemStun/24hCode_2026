@@ -1,0 +1,27 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84 84" width="84" height="84">
+	<defs>
+		<image  width="84" height="84" id="img1" href="data:image/png;base64,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"/>
+	</defs>
+	<style>
+		.s0 { fill: #ffffff } 
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+	<path id="Forme 1 copy 34" fill-rule="evenodd" class="s0" d="m36 50v6h-6v-6z"/>
+	<path id="Forme 1 copy 35" fill-rule="evenodd" class="s0" d="m33 47v6h-6v-6z"/>
+	<path id="Forme 1 copy 36" fill-rule="evenodd" class="s0" d="m30 41v6h-6v-6z"/>
+	<path id="Forme 1 copy 37" fill-rule="evenodd" class="s0" d="m30 35v6h-6v-6z"/>
+	<path id="Forme 1 copy 38" fill-rule="evenodd" class="s0" d="m36 28v6h-6v-6z"/>
+	<path id="Forme 1 copy 45" fill-rule="evenodd" class="s0" d="m33 32v6h-6v-6z"/>
+	<path id="Forme 1 copy 39" fill-rule="evenodd" class="s0" d="m40 23v6h-6v-6z"/>
+	<path id="Forme 1 copy 40" fill-rule="evenodd" class="s0" d="m44 27v6h-6v-6z"/>
+	<path id="Forme 1 copy 41" fill-rule="evenodd" class="s0" d="m48 31v6h-6v-6z"/>
+	<path id="Forme 1 copy 42" fill-rule="evenodd" class="s0" d="m54 34v6h-6v-6z"/>
+	<path id="Forme 1 copy 43" fill-rule="evenodd" class="s0" d="m60 41v6h-6v-6z"/>
+	<path id="Forme 1 copy 44" fill-rule="evenodd" class="s0" d="m56 36v6h-6v-6z"/>
+	<path id="Forme 1 copy 49" fill-rule="evenodd" class="s0" d="m60 47v6h-6v-6z"/>
+	<path id="Forme 1 copy 50" fill-rule="evenodd" class="s0" d="m48 53v6h-6v-6z"/>
+	<path id="Forme 1 copy 52" fill-rule="evenodd" class="s0" d="m48 53v6h-6v-6z"/>
+	<path id="Forme 1 copy 53" fill-rule="evenodd" class="s0" d="m54 53v6h-6v-6z"/>
+	<path id="Forme 1 copy 54" fill-rule="evenodd" class="s0" d="m57 50v6h-6v-6z"/>
+	<path id="Forme 1 copy 51" fill-rule="evenodd" class="s0" d="m42 53v6h-6v-6z"/>
+</svg>
