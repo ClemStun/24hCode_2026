@@ -225,6 +225,7 @@ def get_route_to_position(request):
             print(f"Calculating route from ({state.position_x}, {state.position_y}) to ({tx}, {ty}) with max movement {state.max_movement}")
             route = trouver_itineraire_navire((state.position_x, state.position_y), (tx, ty), state.max_movement)
             # Ici, vous pouvez ajouter la logique pour calculer la route vers la position cible
+            print(f"Route found: {route}")
             return JsonResponse({'status': 'success', 'route': route})
         except Exception as e:
             print(e)
