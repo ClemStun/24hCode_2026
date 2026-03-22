@@ -90,3 +90,25 @@
     import hud from "{% static 'js/hud.js' %}";
     hud.init();
 </script>
+<script type="module">
+    import move from "{% static 'js/move.js' %}";
+    document.addEventListener('keydown', async (event) => {
+        if (event.key == 'z') {
+            await move.moveNext('N');
+        } else if (event.key == 's') {
+            await move.moveNext('S');
+        } else if (event.key == 'q') {
+            await move.moveNext('W');
+        } else if (event.key == 'd') {
+            await move.moveNext('E');
+        } else if (event.key == 'a') {
+            await move.moveNext('NW');
+        } else if (event.key == 'e') {
+            await move.moveNext('NE');
+        } else if (event.key == 'w') {
+            await move.moveNext('SW');
+        } else if (event.key == 'c') {
+            await move.moveNext('SE');
+        }
+    });
+</script>

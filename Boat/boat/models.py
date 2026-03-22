@@ -42,7 +42,9 @@ class Case(models.Model):
     x = models.IntegerField(default=0)
     y = models.IntegerField(default=0)
     type = models.CharField(max_length=255, default='')
+    state = models.CharField(max_length=255, default='')
     zone = models.IntegerField(default=0)
+    name = models.CharField(max_length=255, default='')
 
     ships = models.ManyToManyField(Ship, related_name='cases')
 
