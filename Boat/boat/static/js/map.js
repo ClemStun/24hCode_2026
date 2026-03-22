@@ -41,6 +41,8 @@ class Map extends Game {
             if (event.target.classList.contains('map-cell')) {
                 document.querySelectorAll('.map-cell.selected').forEach(cell => cell.classList.remove('selected'));
                 event.target.classList.add('selected');
+                const x = parseInt(event.target.getAttribute('data-x'), 10);
+                const y = parseInt(event.target.getAttribute('data-y'), 10);
             }
         });
 

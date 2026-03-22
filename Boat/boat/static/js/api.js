@@ -65,6 +65,7 @@ class Api {
         if (this._shudown) {
             return;
         }
+        console.log("ALLOOOOLOLOLOLOLOLOLOLO")
 
         const data = options.data ?? {};
         delete options.data;
